@@ -1,0 +1,9 @@
+CREATE TABLE users (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	name TEXT NOT NULL,
+	email TEXT NOT NULL,
+	password TEXT NOT NULL,
+	devices TEXT NOT NULL,
+	balance REAL NOT NULL,
+	currency TEXT NOT NULL
+);

@@ -1,0 +1,12 @@
+CREATE TABLE
+	users (
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		--remote INTEGER NOT NULL,
+		creation_date DATETIME NOT NULL DEFAULT (NOW ()),
+		last_update DATETIME NOT NULL DEFAULT (NOW ()),
+		username TEXT NOT NULL,
+		email TEXT NOT NULL,
+		password TEXT NOT NULL,
+		currency TEXT NOT NULL,
+		balance DECIMAL(13, 2) NOT NULL
+	);

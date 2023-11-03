@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@elysiajs/trpc": "^0.7.0",
+    "@elysiajs/websocket": "^0.2.8",
+    "@prisma/client": "^5.4.2",
+    "@trpc/server": "^10.40.0",
+    "argon2": "^0.31.1",
+    "argon2-cli": "^0.25.1",
+    "elysia": "latest",
+    "prisma": "^5.4.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "module": "src/index.js"
+}
