@@ -1,38 +1,60 @@
-import { PieChart as PC } from "react-native-chart-kit";
-import { ComponentProps, useState } from "react";
-import { View, Dimensions } from "react-native";
-import Heading from "./Heading";
+// TODO:
+// Add support for legend rendering by color.
 
-export type PieChartData = Pick<ComponentProps<typeof PC>, "data">;
-export type PieChartConfig = Pick<ComponentProps<typeof PC>, "chartConfig">;
+import { PieChart as PC } from "react-native-gifted-charts";
+import { View, useColorScheme, Appearance } from "react-native";
+import Heading from "./Heading";
+import Text from "./Text";
+import { ComponentProps, useState } from "react";
+
+function renderDot(color:string){
+  return <View
+    className={`bg-[${color}] aspect-square h-4 rounded-full`}
+  />;
+}
 
 export default function PieChart({
-  title,
+  color,
+  darkColor,
   data,
-  accessor,
-  chartConfig,
-  ...props }: ComponentProps<typeof PC> & { title: string; }) {
-  const [chartWidth, setChartWidth] = useState<number>(Dimensions.get("screen").width * 95 / 100);
-  Dimensions.addEventListener(
-    "change", ({ screen }) => {
-      setChartWidth(screen.width * 95 / 100);
-    });
-
+  title
+}: ComponentProps<typeof PC> & { title: string; color:string; darkColor?:string; }){
+  const [chartColor, setChartColor] = useState<string>(color);
+  
+  Appearance.addChangeListener(({
+    colorScheme
+  }) => {
+      if(colorScheme === "dark"){
+        setChartColor(darkColor || color);
+        return;
+      }
+      setChartColor(color);
+    })
   return (
-    <View className="flex flex-col gap-2 p-2 w-full h-auto justify-start" >
+  <View>
       <Heading>
         {title}
       </Heading>
-      <PC
+      <View>
+        <PC
         data={data}
-        chartConfig={chartConfig}
-        accessor={accessor}
-        {...props}
-        width={chartWidth}
-        height={chartWidth * 16 / 9}
-        fromZero
-        backgroundColor={"transparent"}
+        textColor={chartColor}
       />
+        <View className="flex">
+          {
+            data.map((item, it) => {
+              return (
+              <View key={it} className="flex flex-row flex-nowrap items-center space-x-4">
+                  {renderDot(chartColor)}
+                  <Text>
+                    {item.text}
+                  </Text>
+                </View>
+              );
+            })
+          }
+        </View>
+      </View>
     </View>
   );
 }
